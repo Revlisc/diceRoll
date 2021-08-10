@@ -12,7 +12,8 @@ class RollDice extends Component {
         this.state = {
             diceValues : Array.from({length: num}, () => 'one'), 
             diceHistory : [], 
-            rolling: false
+            rolling: false,
+            isPast: false
         };
         this.roll = this.roll.bind(this);
 
@@ -57,12 +58,12 @@ class RollDice extends Component {
     }
     */
     render() {
-        const { diceValues, diceHistory, rolling } = this.state;
+        const { diceValues, diceHistory, rolling, isPast } = this.state;
         return(
             <Fragment>
                 <Fragment>
                 {
-                    diceValues.map((item, idx) => <Dice key={`dice${idx}`}face={item} rolling={rolling} />)
+                    diceValues.map((item, idx) => <Dice key={`dice${idx}`}face={item} rolling={rolling} isPast={isPast} />)
                 }
                 <button onClick={this.roll} disabled={this.state.rolling}>
                     {this.state.rolling ? 'Rolling...' : 'Roll Dice!'}
@@ -76,7 +77,7 @@ class RollDice extends Component {
                             <p>Roll Number: {idx + 1}</p>
                             {
                             priorDice.map( (item, idx) =>
-                                <Dice className={'dice-history'} key={`container${idx}`} face={item} rolling={false}></Dice>
+                                <Dice key={`container${idx}`} face={item} rolling={false} isPast={true}></Dice>
                                 )
                             }
                         </div>
