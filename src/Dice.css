@@ -1,8 +1,14 @@
 .Dice {
     font-size: 10rem;
     padding: 0.25em;
-    color: slateblue;
+    color: red;
     
+}
+
+.dice-history {
+    font-size: 5rem;
+    padding: 0.25rem;
+    color: blue;
 }
 
 .rolling {
