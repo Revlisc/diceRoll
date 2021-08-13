@@ -4,7 +4,7 @@ import { numDice } from "./numDice.js";
 
 
 const sides = ['one', 'two', 'three', 'four', 'five', 'six'];
-let num = 4 //numDice();
+let num = numDice();
 
 class RollDice extends Component {
     constructor(props) {
@@ -16,6 +16,7 @@ class RollDice extends Component {
             isPast: false
         };
         this.roll = this.roll.bind(this);
+        this.changeDice = this.changeDice.bind(this);
 
     }
     
@@ -47,16 +48,14 @@ class RollDice extends Component {
             this.setState({rolling: false});
         }, 1000);
     }
-    /*
+    
     changeDice() {
         let newNum = numDice();
         this.setState({diceValues: Array.from({length: newNum}, () => 'one'),});
         num = newNum;
-        <button onClick={this.changeDice} disabled={this.state.rolling}>
-                    Change number of Dice
-                </button>
+        
     }
-    */
+    
     render() {
         const { diceValues, diceHistory, rolling, isPast } = this.state;
         return(
@@ -67,6 +66,10 @@ class RollDice extends Component {
                 }
                 <button onClick={this.roll} disabled={this.state.rolling}>
                     {this.state.rolling ? 'Rolling...' : 'Roll Dice!'}
+                </button>
+
+                <button onClick={this.changeDice} disabled={this.state.rolling}>
+                    Change number of Dice
                 </button>
                 
 ​
