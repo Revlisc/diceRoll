@@ -5,7 +5,7 @@ import RollDice from './Components/RollDice';
 function App() {
   return (
     <div className="App">
-      <RollDice />
+      <RollDice className='rollDice'/>
     </div>
   );
 }
