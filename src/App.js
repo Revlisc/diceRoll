@@ -29,16 +29,13 @@ class App extends Component {
               <Route exact path='/' render={() => <HomePage currentUser={currentUser} userInfo={userInfo} />} />
               <Route exact path='/login'
                 render={() => currentUser ? (
-                  <Redirect to='/' />
+                  <Route exact to='/game' render={() => <div className=""><RollDice className='rollDice'/></div>} />
                 ) : (
                   <SignInPage setCurrentUser={this.setCurrentUser} />
                 )}
               />
             </Switch>
             
-            <div className="App">
-              <RollDice className='rollDice'/>
-            </div>
         </Fragment>
         
       );
