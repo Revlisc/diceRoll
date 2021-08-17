@@ -1,4 +1,6 @@
 import React, { Fragment, Component } from 'react';
+import { connect } from 'react-redux';
+import { setUserInfo } from './redux/actions';
 import './App.css';
 import RollDice from './Components/RollDice';
 import { Route, Switch, Redirect } from 'react-router-dom';
@@ -9,19 +11,23 @@ import Header from './Components/Header';
 
 class App extends Component {
   
+  
   state = {
     currentUser: null,
     userInfo: null
   }
   
+
   setCurrentUser = ({username, email, password}) => {
+    const { setUserInfo } = this.props;
+    setUserInfo({ username, email, password });
     //username email and password
-    console.log(username);
-    this.setState({currentUser: username, userInfo: {username, email, password}})
+    //console.log(username);
+    //this.setState({currentUser: username, userInfo: {username, email, password}})
   }
 
   render() {
-      const { currentUser, userInfo } = this.state;
+      const { currentUser, userInfo } = this.props;
       return (
         <Fragment>
             <Header />
@@ -42,5 +48,14 @@ class App extends Component {
   };
 }
 
+const mapStateToProps = (state) => ({
+    currentUser: state.currentUser,
+    userInfo: state.userInfo
+});
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+    setUserInfo: (values) => dispatch(setUserInfo(values)),
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
