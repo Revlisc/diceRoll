@@ -1,15 +1,41 @@
 import React, { Component, Fragment} from 'react';
-import { Row, Col, Container } from 'reactstrap';
+//import { div, Col, Container } from 'reactstrap';
 import Dice from "./Dice.js";
 import '../rollDice.css';
-import { numDice } from "./numDice.js";
-import { NumberButton } from './numberButton.js';
+import Redux from 'redux';
+
 
 
 const sides = ['one', 'two', 'three', 'four', 'five', 'six'];
 
 let num = 1;
 
+/*
+const INITIAL_STATE = {
+    num: '1',
+    diceHistory: [],
+    rolling: false,
+    isPast: false,
+    diceValues: 'one'
+}
+
+const myReducer = (state = INITIAL_STATE, action) => {
+    switch(action.type) {
+        case ''
+    }
+}
+
+const updateHistory = ({diceHistory}) => {
+    return ({
+        type: 'UPDATE_HISTORY',
+        payload: {
+            diceHistory
+        }
+    })
+}
+
+const store = createStore(myReducer);
+*/
 class RollDice extends Component {
     constructor(props) {
         super(props);
@@ -21,7 +47,6 @@ class RollDice extends Component {
             number: '1'
         };
         this.roll = this.roll.bind(this);
-        //this.changeDice = this.changeDice.bind(this);
         this.handleInput = this.handleInput.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
@@ -49,7 +74,7 @@ class RollDice extends Component {
        
    }
 
-   onSubmit() {
+    onSubmit() {
        this.setState({
             diceValues: Array.from({length: this.state.number}, () => 'one')
        });
@@ -58,13 +83,13 @@ class RollDice extends Component {
     render() {
         const { diceValues, diceHistory, rolling, isPast, number } = this.state;
         return(
-            <Container>
-                <Row xs={12} className={'diceDisplay'}>
+            <Fragment>
+                <div className={'diceDisplay'}>
                 {
                     diceValues.map((item, idx) => <Dice key={`dice${idx}`}face={item} rolling={rolling} isPast={isPast} />)
                 }
-                </Row>
-                <Row xs={6} className='buttons'>
+                </div>
+                <div className='buttons'>
 
                     <button className={'rollButton'} onClick={this.roll} disabled={this.state.rolling}>
                         {this.state.rolling ? 'Rolling...' : 'Roll Dice!'}
@@ -75,9 +100,9 @@ class RollDice extends Component {
                     <button type='button' className={'submit'} onClick={this.onSubmit} >
                         Save
                     </button>
-                </Row>
+                </div>
 
-                <Row style={{display: 'flex', flexDirection: 'column'}} className={'historyDisplay'}>
+                <div style={{display: 'flex', flexDirection: 'column'}} className={'historyDisplay'}>
                     {
                     diceHistory.map((priorDice, idx) =>
                         <div>
@@ -90,9 +115,9 @@ class RollDice extends Component {
                         </div>
                         )
                     }
-                </Row>
+                </div>
 ​              
-            </Container>
+            </Fragment>
         );
     }
 }
