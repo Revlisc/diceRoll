@@ -2,7 +2,8 @@ import React, { Component, Fragment} from 'react';
 //import { div, Col, Container } from 'reactstrap';
 import Dice from "./Dice.js";
 import '../rollDice.css';
-import Redux from 'redux';
+import { connect } from 'react-redux';
+import { setDiceHistory } from '../redux/actions';;
 
 
 
@@ -10,38 +11,12 @@ const sides = ['one', 'two', 'three', 'four', 'five', 'six'];
 
 let num = 1;
 
-/*
-const INITIAL_STATE = {
-    num: '1',
-    diceHistory: [],
-    rolling: false,
-    isPast: false,
-    diceValues: 'one'
-}
-
-const myReducer = (state = INITIAL_STATE, action) => {
-    switch(action.type) {
-        case ''
-    }
-}
-
-const updateHistory = ({diceHistory}) => {
-    return ({
-        type: 'UPDATE_HISTORY',
-        payload: {
-            diceHistory
-        }
-    })
-}
-
-const store = createStore(myReducer);
-*/
 class RollDice extends Component {
     constructor(props) {
         super(props);
         this.state = {
             diceValues : Array.from({length: num}, () => 'one'), 
-            diceHistory : [], 
+            //diceHistory : [], 
             rolling: false,
             isPast: false,
             number: '1'
@@ -54,7 +29,9 @@ class RollDice extends Component {
     
     roll() {
         
-        const {diceValues, diceHistory} = this.state;
+        //moved diceHistory to store, so pull off of props
+        const {diceValues, } = this.state;
+        const { diceHistory } = this.props;
         console.log("dice history from state " + diceHistory);
         const newDiceValues = diceValues.map(() => sides[Math.floor(Math.random() * sides.length)]);
         diceHistory.push(newDiceValues);
@@ -81,7 +58,8 @@ class RollDice extends Component {
    }
     
     render() {
-        const { diceValues, diceHistory, rolling, isPast, number } = this.state;
+        const { diceValues, rolling, isPast, number } = this.state;
+        const { diceHistory } = this.props
         return(
             <Fragment>
                 <div className={'diceDisplay'}>
@@ -122,4 +100,14 @@ class RollDice extends Component {
     }
 }
 
-export default RollDice;
+//added to use redux
+const mapStateToProps = (state) => ({
+    diceHistory: state.diceHistory
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    setDiceHistory: (values) => dispatch(setDiceHistory(values)),
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(RollDice);

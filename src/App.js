@@ -11,12 +11,12 @@ import Header from './Components/Header';
 
 class App extends Component {
   
-  
+  /*
   state = {
     currentUser: null,
     userInfo: null
   }
-  
+  */
 
   setCurrentUser = ({username, email, password}) => {
     const { setUserInfo } = this.props;
