@@ -34,9 +34,10 @@ class RollDice extends Component {
         const { diceHistory } = this.props;
         console.log("dice history from state " + diceHistory);
         const newDiceValues = diceValues.map(() => sides[Math.floor(Math.random() * sides.length)]);
-        diceHistory.push(newDiceValues);
+        //diceHistory.push(newDiceValues);
+        setDiceHistory({diceHistory: newDiceValues});
         console.log("updated dice history " + diceHistory);
-        this.setState({diceValues: newDiceValues, rolling: true, diceHistory});
+        this.setState({diceValues: newDiceValues, rolling: true, });
        
         setTimeout(() => {
             this.setState({rolling: false});
@@ -59,7 +60,7 @@ class RollDice extends Component {
     
     render() {
         const { diceValues, rolling, isPast, number } = this.state;
-        const { diceHistory } = this.props
+        const { diceHistory } = this.props;
         return(
             <Fragment>
                 <div className={'diceDisplay'}>
@@ -82,7 +83,7 @@ class RollDice extends Component {
 
                 <div style={{display: 'flex', flexDirection: 'column'}} className={'historyDisplay'}>
                     {
-                    diceHistory.map((priorDice, idx) =>
+                    this.diceHistory.map((priorDice, idx) =>
                         <div>
                             <p>Roll Number: {idx + 1}</p>
                             {

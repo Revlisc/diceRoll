@@ -7,6 +7,6 @@ export const setUserInfo = (values) => ({
 });
 
 export const setDiceHistory = (values) => ({
-    type: UserActionTypes.SET_DICE_HISTORY,
+    type: UserActionTypes.SET_DICE_PREVIOUS,
     payload: values
-})
+});
