@@ -48,10 +48,12 @@ class App extends Component {
   };
 }
 
-const mapStateToProps = (state) => ({
-    currentUser: state.currentUser,
-    userInfo: state.userInfo
-});
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.user.currentUser,
+    userInfo: state.user.userInfo
+  }
+};
 
 const mapDispatchToProps = (dispatch) => ({
     setUserInfo: (values) => dispatch(setUserInfo(values)),

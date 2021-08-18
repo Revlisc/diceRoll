@@ -1,7 +1,11 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { userReducer } from './loginReducer';
 import { diceRollReducer } from './diceRollRedux/diceRollReducer';
 
-const store = createStore(userReducer, diceRollReducer);
+const rootReducer = combineReducers({
+    user: userReducer,
+    dice: diceRollReducer
+})
+const store = createStore(rootReducer);
 
 export default store;

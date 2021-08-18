@@ -9,16 +9,19 @@ const INITIAL_STATE = {
 }
 
 export const diceRollReducer = (state = INITIAL_STATE, action) => {
+    console.log(action);
     switch(action.type) {
-        case UserActionTypes.SET_DICE_PREVIOUS :
+        case UserActionTypes.SET_DICE_HISTORY :
             return {
                 ...state,
-                diceHistory: action.payload,
+                diceHistory: [
+                    ...state.diceHistory,
+                    action.payload,
+                ]
                 
             }
         default :
-            return {
-                ...state
-            }
+            return state;
+            
     }
 }

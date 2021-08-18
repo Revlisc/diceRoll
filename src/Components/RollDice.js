@@ -60,7 +60,7 @@ class RollDice extends Component {
     
     render() {
         const { diceValues, rolling, isPast, number } = this.state;
-        const { diceHistory } = this.props;
+        console.log(this.props);
         return(
             <Fragment>
                 <div className={'diceDisplay'}>
@@ -83,7 +83,7 @@ class RollDice extends Component {
 
                 <div style={{display: 'flex', flexDirection: 'column'}} className={'historyDisplay'}>
                     {
-                    this.diceHistory.map((priorDice, idx) =>
+                    this.props.diceHistory.map((priorDice, idx) =>
                         <div>
                             <p>Roll Number: {idx + 1}</p>
                             {
@@ -102,12 +102,18 @@ class RollDice extends Component {
 }
 
 //added to use redux
-const mapStateToProps = (state) => ({
-    diceHistory: state.diceHistory
-});
+const mapStateToProps = (state) => {
+    console.log(state);
+    return ({
+    diceHistory: state.dice.diceHistory
+})};
 
 const mapDispatchToProps = (dispatch) => ({
-    setDiceHistory: (values) => dispatch(setDiceHistory(values)),
+    setDiceHistory: (values) => {
+        const action = setDiceHistory(values)
+        console.log(action);
+        dispatch(setDiceHistory(values))
+    }
 
 });
 

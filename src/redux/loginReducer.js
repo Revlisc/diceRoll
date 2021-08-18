@@ -6,6 +6,7 @@ const INITIAL_STATE = {
 }
 
 export const userReducer = (state = INITIAL_STATE, action) => {
+    console.log(action)
     switch(action.type) {
         case UserActionTypes.SET_USER_INFO :
             return {
@@ -14,8 +15,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 currentUser: action.payload.username
             }
         default :
-            return {
-                ...state
-            }
+            return state
+            
     }
 }
