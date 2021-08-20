@@ -31,13 +31,14 @@ class RollDice extends Component {
         
         //moved diceHistory to store, so pull off of props
         const {diceValues, } = this.state;
-        const { diceHistory } = this.props;
+        const { diceHistory, setDiceHistory } = this.props;
         console.log("dice history from state " + diceHistory);
         const newDiceValues = diceValues.map(() => sides[Math.floor(Math.random() * sides.length)]);
+        const test = [newDiceValues];
         //diceHistory.push(newDiceValues);
-        setDiceHistory({diceHistory: newDiceValues});
         console.log("updated dice history " + diceHistory);
         this.setState({diceValues: newDiceValues, rolling: true, });
+        setDiceHistory(test);
        
         setTimeout(() => {
             this.setState({rolling: false});
@@ -58,63 +59,66 @@ class RollDice extends Component {
        });
    }
     
-    render() {
-        const { diceValues, rolling, isPast, number } = this.state;
-        console.log(this.props);
-        return(
-            <Fragment>
-                <div className={'diceDisplay'}>
+   render() {
+    const { diceValues, rolling, isPast, number } = this.state;
+    const { diceHistory }  = this.props
+    console.log(this.props);
+    console.log('state is ' + this.state);
+    console.log('dice history is ' + diceHistory);
+    //console.log('prior dice is ' + priorDice);
+    return(
+        <Fragment>
+            <div className={'diceDisplay'}>
+            {
+                diceValues.map((item, idx) => <Dice key={`dice${idx}`}face={item} rolling={rolling} isPast={isPast} />)
+            }
+            </div>
+            <div className='buttons'>
+
+                <button className={'rollButton'} onClick={this.roll} disabled={this.state.rolling}>
+                    {this.state.rolling ? 'Rolling...' : 'Roll Dice!'}
+                </button>
+
+                <label for="selector" className={'selector'}>Choose your number of dice:</label>
+                <input id='selector'  className={'selector'} type='number' pattern='[0-9]' min='1' max='9' placeholder='1' onInput={this.handleInput} value={number}/>
+                <button type='button' className={'submit'} onClick={this.onSubmit} >
+                    Save
+                </button>
+            </div>
+
+            <div style={{display: 'flex', flexDirection: 'column'}} className={'historyDisplay'}>
                 {
-                    diceValues.map((item, idx) => <Dice key={`dice${idx}`}face={item} rolling={rolling} isPast={isPast} />)
-                }
-                </div>
-                <div className='buttons'>
-
-                    <button className={'rollButton'} onClick={this.roll} disabled={this.state.rolling}>
-                        {this.state.rolling ? 'Rolling...' : 'Roll Dice!'}
-                    </button>
-
-                    <label for="selector" className={'selector'}>Choose your number of dice:</label>
-                    <input id='selector'  className={'selector'} type='number' pattern='[0-9]' min='1' max='9' placeholder='1' onInput={this.handleInput} value={number}/>
-                    <button type='button' className={'submit'} onClick={this.onSubmit} >
-                        Save
-                    </button>
-                </div>
-
-                <div style={{display: 'flex', flexDirection: 'column'}} className={'historyDisplay'}>
-                    {
-                    this.props.diceHistory.map((priorDice, idx) =>
+                    
+                    diceHistory.length > 0 ?
+                    diceHistory.map((priorDice, idx) => (
                         <div>
-                            <p>Roll Number: {idx + 1}</p>
+                            <p>Roll Number: {idx + 4}</p>
                             {
-                            priorDice.map( (item, idx) =>
-                                <Dice key={`container${idx}`} face={item} rolling={false} isPast={true}></Dice>
-                                )
+                                priorDice.map( (item, idx) =>
+                                    <Dice key={`container${idx}`} face={item} rolling={false} isPast={true}></Dice>
+                            )
                             }
                         </div>
                         )
-                    }
-                </div>
+                    )
+                    :
+                    <div></div>
+
+                }
+            </div>
 ​              
-            </Fragment>
-        );
-    }
+        </Fragment>
+    );
+}
 }
 
 //added to use redux
-const mapStateToProps = (state) => {
-    console.log(state);
-    return ({
+const mapStateToProps = (state) => ({
     diceHistory: state.dice.diceHistory
-})};
+});
 
 const mapDispatchToProps = (dispatch) => ({
-    setDiceHistory: (values) => {
-        const action = setDiceHistory(values)
-        console.log(action);
-        dispatch(setDiceHistory(values))
-    }
-
+    setDiceHistory: (values) => dispatch(setDiceHistory([values])),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RollDice);

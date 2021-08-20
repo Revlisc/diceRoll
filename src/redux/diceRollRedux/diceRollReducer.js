@@ -2,7 +2,7 @@ import { UserActionTypes } from '../actionTypes';
 
 const INITIAL_STATE = {
     num: '1',
-    diceHistory: [],
+    diceHistory: [['one', 'three']],
     rolling: false,
     isPast: false,
     //diceValues: 'one'
