@@ -3,7 +3,8 @@ import React, { Component, Fragment} from 'react';
 import Dice from "./Dice.js";
 import '../rollDice.css';
 import { connect } from 'react-redux';
-import { setDiceHistory } from '../redux/actions';;
+import { setDiceHistory } from '../redux/actions';
+import Points from './Points.js';
 
 
 
@@ -68,6 +69,7 @@ class RollDice extends Component {
     //console.log('prior dice is ' + priorDice);
     return(
         <Fragment>
+            <Points />
             <div className={'diceDisplay'}>
             {
                 diceValues.map((item, idx) => <Dice key={`dice${idx}`}face={item} rolling={rolling} isPast={isPast} />)
