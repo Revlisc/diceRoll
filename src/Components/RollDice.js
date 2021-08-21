@@ -34,11 +34,11 @@ class RollDice extends Component {
         const { diceHistory, setDiceHistory } = this.props;
         console.log("dice history from state " + diceHistory);
         const newDiceValues = diceValues.map(() => sides[Math.floor(Math.random() * sides.length)]);
-        const test = [newDiceValues];
+        
         //diceHistory.push(newDiceValues);
         console.log("updated dice history " + diceHistory);
         this.setState({diceValues: newDiceValues, rolling: true, });
-        setDiceHistory(test);
+        setDiceHistory(newDiceValues);
        
         setTimeout(() => {
             this.setState({rolling: false});
@@ -92,11 +92,11 @@ class RollDice extends Component {
                     diceHistory.length > 0 ?
                     diceHistory.map((priorDice, idx) => (
                         <div>
-                            <p>Roll Number: {idx + 4}</p>
+                            <p>Roll Number: {idx + 1}</p>
                             {
                                 priorDice.map( (item, idx) =>
-                                    <Dice key={`container${idx}`} face={item} rolling={false} isPast={true}></Dice>
-                            )
+                                <Dice key={`container${idx}`} face={item} rolling={false} isPast={true}></Dice>
+                                )
                             }
                         </div>
                         )
@@ -118,7 +118,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    setDiceHistory: (values) => dispatch(setDiceHistory([values])),
+    setDiceHistory: (values) => dispatch(setDiceHistory(values)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RollDice);
