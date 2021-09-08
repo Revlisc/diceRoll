@@ -17,7 +17,7 @@
 }
 
 .loggedIntro {
-    background-color: rgba(255, 0, 0, 0.8);
+    background-color: rgba(0, 255, 98, 0.8);
     color: "yellow";
     position: absolute;
     display: inline-block;

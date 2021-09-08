@@ -1,7 +1,7 @@
 import {UserActionTypes } from './actionTypes';
 
 const INITIAL_STATE = {
-    currentUser: 'Dale',
+    currentUser: '',
     userInfo: null,
 }
 
